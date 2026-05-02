@@ -11,8 +11,8 @@ require __DIR__ . '/../layouts/header.php';
 ?>
 
 <div class="page-header">
-    <h2>Welcome back, <?= htmlspecialchars(Auth::user()['name'] ?? 'User') ?>!</h2>
-    <p>Here is a summary of your RBAC system.</p>
+    <h2>Selamat datang, <?= htmlspecialchars(Auth::user()['name'] ?? 'User') ?>!</h2>
+    <p>Berikut adalah ringkasan dari Sistem Absensi Anda.</p>
 </div>
 
 <div class="stats-grid">

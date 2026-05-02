@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login &mdash; RBAC System</title>
+    <title>Login &mdash; Sistem Absensi</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -142,8 +142,8 @@
 <body>
 <div class="login-wrapper">
     <div class="login-brand">
-        <h1>RBAC <span>System</span></h1>
-        <p>Role-Based Access Control Administration</p>
+        <h1>Sistem <span>Absensi</span></h1>
+        <p>Aplikasi Manajemen Kehadiran Pegawai</p>
     </div>
 
     <div class="login-card">
@@ -196,7 +196,7 @@
     </div>
 
     <div class="login-footer">
-        &copy; <?= date('Y') ?> RBAC System &mdash; PHP Native
+        &copy; <?= date('Y') ?> Sistem Absensi &mdash; PHP Native
     </div>
 </div>
 </body>
