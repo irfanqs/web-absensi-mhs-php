@@ -1,0 +1,33 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.sln
+
+# Composer Dependencies (jika nanti menggunakan composer)
+vendor/
+composer.phar
+
+# Environment & Config
+.env
+.env.*
+!.env.example
+config/custom.php
+
+# Logs
+*.log
+error_log
+
+# Uploads (folder yang diisi oleh user aplikasi)
+uploads/
+public/uploads/
+.claude/
