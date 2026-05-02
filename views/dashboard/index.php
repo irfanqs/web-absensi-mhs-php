@@ -2,10 +2,14 @@
 require_once __DIR__ . '/../../core/Database.php';
 $db = Database::getInstance();
 
-// Stats Admin & Dosen
+// Stats Admin
 $userCount       = (int) ($db->fetch('SELECT COUNT(*) AS c FROM users')['c'] ?? 0);
 $roleCount       = (int) ($db->fetch('SELECT COUNT(*) AS c FROM roles')['c'] ?? 0);
 $permissionCount = (int) ($db->fetch('SELECT COUNT(*) AS c FROM permissions')['c'] ?? 0);
+
+// Stats Dosen (Harian Keseluruhan)
+$hadirHariIni = (int) ($db->fetch("SELECT COUNT(*) AS c FROM attendances WHERE status = 'Hadir' AND DATE(check_in) = CURDATE()")['c'] ?? 0);
+$izinSakitHariIni = (int) ($db->fetch("SELECT COUNT(*) AS c FROM attendances WHERE status IN ('Izin', 'Sakit') AND DATE(check_in) = CURDATE()")['c'] ?? 0);
 
 // Stats Mahasiswa (Pribadi)
 $userId = Auth::user()['id'];
@@ -36,6 +40,15 @@ require __DIR__ . '/../layouts/header.php';
         <div class="stat-label">Total Permissions</div>
         <div class="stat-value"><?= $permissionCount ?></div>
     </div>
+    <?php elseif (Auth::hasPermission('absensi.view_all')): ?>
+    <div class="stat-card green">
+        <div class="stat-label">Mhs Hadir Hari Ini</div>
+        <div class="stat-value"><?= $hadirHariIni ?></div>
+    </div>
+    <div class="stat-card blue">
+        <div class="stat-label">Mhs Izin / Sakit</div>
+        <div class="stat-value"><?= $izinSakitHariIni ?></div>
+    </div>
     <?php else: ?>
     <div class="stat-card green">
         <div class="stat-label">Kehadiran Bulan Ini</div>
@@ -53,7 +66,7 @@ require __DIR__ . '/../layouts/header.php';
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-    <?php if (Auth::hasPermission('absensi.create')): ?>
+    <?php if (Auth::hasPermission('absensi.create') && !Auth::hasPermission('user.view')): ?>
     <div class="card">
         <div class="card-header">
             <span class="card-title">Presensi Mahasiswa</span>
