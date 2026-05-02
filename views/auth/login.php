@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -188,15 +187,15 @@
             <button type="submit" class="btn-block">Sign In &rarr;</button>
         </form>
 
-        <div class="hint-box">
+        <!-- <div class="hint-box">
             <strong>Default Credentials</strong>
             Email: admin@example.com<br>
-            Password: password
-        </div>
+            Password: aku233
+        </div> -->
     </div>
 
     <div class="login-footer">
-        &copy; <?= date('Y') ?> Sistem Absensi &mdash; PHP Native
+        &copy; <?= date('Y') ?> Sistem Absensi 
     </div>
 </div>
 </body>

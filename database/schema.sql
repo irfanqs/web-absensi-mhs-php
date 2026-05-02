@@ -76,12 +76,12 @@ INSERT IGNORE INTO role_permissions (role_id, permission_id)
     SELECT 1, id FROM permissions;
 
 -- Default admin user
--- Password: password  (bcrypt hash generated with PHP password_hash('password', PASSWORD_DEFAULT))
+-- Password: aku233  (bcrypt hash generated with PHP password_hash('aku233', PASSWORD_DEFAULT))
 INSERT IGNORE INTO users (id, name, email, password) VALUES (
     1,
     'Administrator',
     'admin@example.com',
-    '$2y$10$Y2/TBAAmLGxUHTcuMYpXx.Bgtpkf995yNLFqXkrnqJCGxr0MrKfRG'
+    '$2y$10$jLToR.wFqV9x.RB2j/CrneTAX9cs9rRsxsNUanDSdrLyPig037rNO'
 );
 
 -- Assign admin role to the admin user
