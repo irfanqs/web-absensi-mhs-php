@@ -85,6 +85,18 @@ switch ($page) {
         };
         break;
 
+    // ── ABSENSI ───────────────────────────────────────────────────────────────
+    case 'absensi':
+        Auth::requireLogin();
+        require_once __DIR__ . '/controllers/AbsensiController.php';
+        $controller = new AbsensiController();
+        match ($action) {
+            'masuk'  => $controller->masuk(),
+            'pulang' => $controller->pulang(),
+            default  => header('Location: ' . BASE_URL . '/index.php?page=dashboard'),
+        };
+        break;
+
     // ── FALLBACK ──────────────────────────────────────────────────────────────
     default:
         Auth::requireLogin();

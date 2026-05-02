@@ -16,6 +16,7 @@ require __DIR__ . '/../layouts/header.php';
 </div>
 
 <div class="stats-grid">
+    <?php if (Auth::hasPermission('user.view')): ?>
     <div class="stat-card green">
         <div class="stat-label">Total Users</div>
         <div class="stat-value"><?= $userCount ?></div>
@@ -28,9 +29,42 @@ require __DIR__ . '/../layouts/header.php';
         <div class="stat-label">Total Permissions</div>
         <div class="stat-value"><?= $permissionCount ?></div>
     </div>
+    <?php else: ?>
+    <div class="stat-card green">
+        <div class="stat-label">Kehadiran Bulan Ini</div>
+        <div class="stat-value">0</div>
+    </div>
+    <div class="stat-card blue">
+        <div class="stat-label">Izin / Sakit</div>
+        <div class="stat-value">0</div>
+    </div>
+    <div class="stat-card orange">
+        <div class="stat-label">Alpa</div>
+        <div class="stat-value">0</div>
+    </div>
+    <?php endif; ?>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <?php if (Auth::hasPermission('absensi.create')): ?>
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Presensi Mahasiswa</span>
+        </div>
+        <p style="font-size:14px;color:#6b7280;line-height:1.6;">
+            Silakan klik tombol di bawah untuk mencatat kehadiran Anda hari ini.
+        </p>
+        <div style="margin-top:14px; display:flex; gap:10px;">
+            <form action="<?= BASE_URL ?>/index.php?page=absensi&action=masuk" method="POST">
+                 <button type="submit" class="btn btn-success btn-sm">Check-In (Hadir)</button>
+            </form>
+            <form action="<?= BASE_URL ?>/index.php?page=absensi&action=pulang" method="POST">
+                 <button type="submit" class="btn btn-primary btn-sm">Check-Out (Pulang)</button>
+            </form>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <?php if (Auth::hasPermission('user.view')): ?>
     <div class="card">
         <div class="card-header">

@@ -50,11 +50,24 @@ CREATE TABLE IF NOT EXISTS role_permissions (
     FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS attendances (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    check_in TIMESTAMP NULL,
+    check_out TIMESTAMP NULL,
+    status ENUM('Hadir', 'Izin', 'Sakit', 'Alpa') DEFAULT 'Hadir',
+    notes VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ── Seed Data ─────────────────────────────────────────────────────────────────
 
 -- Default role
-INSERT IGNORE INTO roles (name, description) VALUES
-    ('admin', 'Administrator with full access');
+INSERT IGNORE INTO roles (id, name, description) VALUES
+    (1, 'admin', 'Administrator with full access'),
+    (2, 'dosen', 'Dosen pengajar'),
+    (3, 'mahasiswa', 'Mahasiswa yang melakukan absensi');
 
 -- Default permissions
 INSERT IGNORE INTO permissions (name, description) VALUES
@@ -69,11 +82,22 @@ INSERT IGNORE INTO permissions (name, description) VALUES
     ('permission.view',  'View permissions'),
     ('permission.create','Create permissions'),
     ('permission.edit',  'Edit permissions'),
-    ('permission.delete','Delete permissions');
+    ('permission.delete','Delete permissions'),
+    ('absensi.view_all', 'Melihat semua data absensi mahasiswa'),
+    ('absensi.view_own', 'Melihat riwayat absensi diri sendiri'),
+    ('absensi.create',   'Melakukan absensi masuk/pulang');
 
 -- Assign ALL permissions to the admin role (role id = 1)
 INSERT IGNORE INTO role_permissions (role_id, permission_id)
     SELECT 1, id FROM permissions;
+
+-- Assign Dosen permissions (role id = 2) - bisa melihat semua absen
+INSERT IGNORE INTO role_permissions (role_id, permission_id)
+    SELECT 2, id FROM permissions WHERE name IN ('absensi.view_all');
+
+-- Assign Mahasiswa permissions (role id = 3) - bisa absen & melihat absennya sendiri
+INSERT IGNORE INTO role_permissions (role_id, permission_id)
+    SELECT 3, id FROM permissions WHERE name IN ('absensi.view_own', 'absensi.create');
 
 -- Default admin user
 -- Password: aku233  (bcrypt hash generated with PHP password_hash('aku233', PASSWORD_DEFAULT))
