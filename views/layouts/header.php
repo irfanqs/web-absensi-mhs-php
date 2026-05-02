@@ -411,7 +411,7 @@ $initials = $authUser ? strtoupper(substr($authUser['name'], 0, 1)) : '?';
     <div class="sidebar-section">Main</div>
     <nav>
         <a href="<?= BASE_URL ?>/index.php?page=dashboard&action=index" class="<?= isActive('dashboard') ?>">
-            <i class="icon">&#9632;</i> Dashboard
+            <i class="icon">&#127968;</i> Dashboard
         </a>
         <?php if (Auth::hasPermission('absensi.view_all') || Auth::hasPermission('absensi.view_own')): ?>
         <a href="<?= BASE_URL ?>/index.php?page=absensi&action=index" class="<?= isActive('absensi') ?>">
