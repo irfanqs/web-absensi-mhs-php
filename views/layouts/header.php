@@ -405,7 +405,7 @@ $initials = $authUser ? strtoupper(substr($authUser['name'], 0, 1)) : '?';
 ?>
 <aside class="sidebar">
     <a href="<?= BASE_URL ?>/index.php?page=dashboard&action=index" class="sidebar-brand">
-        RBAC <span>Admin</span>
+        Sistem <span>Absensi</span>
     </a>
 
     <div class="sidebar-section">Main</div>
