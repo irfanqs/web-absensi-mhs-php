@@ -2,9 +2,16 @@
 require_once __DIR__ . '/../../core/Database.php';
 $db = Database::getInstance();
 
+// Stats Admin & Dosen
 $userCount       = (int) ($db->fetch('SELECT COUNT(*) AS c FROM users')['c'] ?? 0);
 $roleCount       = (int) ($db->fetch('SELECT COUNT(*) AS c FROM roles')['c'] ?? 0);
 $permissionCount = (int) ($db->fetch('SELECT COUNT(*) AS c FROM permissions')['c'] ?? 0);
+
+// Stats Mahasiswa (Pribadi)
+$userId = Auth::user()['id'];
+$hadirBulanIni = (int) ($db->fetch("SELECT COUNT(*) AS c FROM attendances WHERE user_id = ? AND status = 'Hadir' AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())", [$userId])['c'] ?? 0);
+$izinSakit = (int) ($db->fetch("SELECT COUNT(*) AS c FROM attendances WHERE user_id = ? AND status IN ('Izin', 'Sakit') AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())", [$userId])['c'] ?? 0);
+$alpa = (int) ($db->fetch("SELECT COUNT(*) AS c FROM attendances WHERE user_id = ? AND status = 'Alpa' AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())", [$userId])['c'] ?? 0);
 
 $pageTitle = 'Dashboard';
 require __DIR__ . '/../layouts/header.php';
@@ -32,15 +39,15 @@ require __DIR__ . '/../layouts/header.php';
     <?php else: ?>
     <div class="stat-card green">
         <div class="stat-label">Kehadiran Bulan Ini</div>
-        <div class="stat-value">0</div>
+        <div class="stat-value"><?= $hadirBulanIni ?></div>
     </div>
     <div class="stat-card blue">
         <div class="stat-label">Izin / Sakit</div>
-        <div class="stat-value">0</div>
+        <div class="stat-value"><?= $izinSakit ?></div>
     </div>
     <div class="stat-card orange">
         <div class="stat-label">Alpa</div>
-        <div class="stat-value">0</div>
+        <div class="stat-value"><?= $alpa ?></div>
     </div>
     <?php endif; ?>
 </div>
@@ -116,6 +123,7 @@ require __DIR__ . '/../layouts/header.php';
     </div>
     <?php endif; ?>
 
+    <?php if (Auth::hasPermission('user.view')): ?>
     <div class="card">
         <div class="card-header">
             <span class="card-title">Your Roles &amp; Permissions</span>
@@ -138,6 +146,7 @@ require __DIR__ . '/../layouts/header.php';
             <?php endif; ?>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 
 <?php require __DIR__ . '/../layouts/sidebar.php'; ?>
