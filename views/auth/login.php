@@ -99,6 +99,26 @@
 
         .btn-block:hover { background: #2980b9; }
 
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper .form-control {
+            padding-right: 40px; /* Space for the eye icon */
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #9ca3af;
+            user-select: none;
+        }
+        .toggle-password:hover {
+            color: #4b5563;
+        }
+
         .flash {
             padding: 11px 14px;
             border-radius: 6px;
@@ -174,14 +194,17 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                    required
-                >
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                        required
+                    >
+                    <span class="toggle-password" id="togglePasswordIcon" onclick="togglePassword()">👁️</span>
+                </div>
             </div>
 
             <button type="submit" class="btn-block">Sign In &rarr;</button>
@@ -198,5 +221,22 @@
         &copy; <?= date('Y') ?> Sistem Absensi 
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePasswordIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.innerText = '👁️‍🗨️'; // Ubah icon jika perlu, atau tetap gunakan icon sebelumnya
+            toggleIcon.style.opacity = '0.5';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.innerText = '👁️';
+            toggleIcon.style.opacity = '1';
+        }
+    }
+</script>
 </body>
 </html>
